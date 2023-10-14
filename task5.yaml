@@ -1,0 +1,29 @@
+---
+- name: Clone Git Repository, Build with Maven, and Deploy to Tomcat
+  hosts: localhost
+  tasks:
+    - name: Clone Git Repository
+      ansible.builtin.git:
+        repo: "https://github.com/Anushasreepj/java-chess.git"
+        dest: "/opt/gitclone"
+      become: yes
+
+    - name: Build Application with Maven
+      ansible.builtin.command:
+        cmd: "mvn -f /opt/gitclone clean install"
+      become: yes
+
+    - name: Copy WAR file to Tomcat webapps directory
+      ansible.builtin.copy:
+        src: "/opt/gitclone/target/chess-1.0-SNAPSHOT.war"
+        dest: "/opt/apache-tomcat-9.0.81/webapps"
+      become: yes
+      delegate_to: 13.239.19.198
+
+    - name: check health status
+      uri:
+       url: "http://13.239.19.198:8080/chess-1.0-SNAPSHOT/"
+      register: health_status
+
+    - debug:
+       msg: "Health status: {{ health_status.status }}"
