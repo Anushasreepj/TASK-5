@@ -1,6 +1,6 @@
 ---
 - name: Clone Git Repository, Build with Maven, and Deploy to Tomcat
-  hosts: 3.27.243.192
+  hosts: localhosts
   tasks:
     - name: Clone Git Repository
       ansible.builtin.git:
