@@ -18,11 +18,11 @@
         src: "/opt/gitclone1/target/chess-1.0-SNAPSHOT.war"
         dest: "/opt/apache-tomcat-9.0.81/webapps"
       become: yes
-      delegate_to: 3.27.243.192
+      delegate_to: 3.25.125.155
 
     - name: check health status
       uri:
-       url: "http://3.27.243.192:8080/chess-1.0-SNAPSHOT/"
+       url: "http://3.25.125.155:8080/chess-1.0-SNAPSHOT/"
       register: health_status
 
     - debug:
